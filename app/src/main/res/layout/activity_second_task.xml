@@ -4,9 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+android:background="@color/backgound"
     android:orientation="vertical"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/dimen_10dp"
+        android:background="@color/white"
+
+        android:layout_height="wrap_content">
     <TextView
         android:layout_width="match_parent"
         android:text="Application Form"
@@ -72,13 +79,19 @@
         android:id="@+id/istrict"
 
         android:layout_height="wrap_content"/>
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
+        android:id="@+id/act_dist"
+        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/btn_submit"
         android:layout_width="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_10dp"
         android:text="Submit"
         />
+    </LinearLayout>
 
 </LinearLayout>

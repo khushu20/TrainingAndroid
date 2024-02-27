@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
@@ -20,6 +21,7 @@ import com.example.newapplication.R;
 public class SecondTaskActivity extends AppCompatActivity {
     private ToggleButton onoff;
     private RadioGroup gender;
+    private AutoCompleteTextView actDist;
     private CheckBox c1, c2, c3;
     private RadioButton r1, r2;
     private Spinner disctrict;
@@ -41,9 +43,15 @@ public class SecondTaskActivity extends AppCompatActivity {
         gender = findViewById(R.id.rg_gender);
         onoff = findViewById(R.id.tb_onoff);
         disctrict = findViewById(R.id.istrict);
+        actDist = findViewById(R.id.act_dist);
+        // dropdown
         ArrayAdapter<String> districtAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, colorsList);
         districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         disctrict.setAdapter(districtAdapter);
+        // autocompltettextview
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,colorsList);
+       // actDist.setThreshold(3);
+        actDist.setAdapter(adapter);
 
         onoff.setOnClickListener(new View.OnClickListener() {
             @Override
