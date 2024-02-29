@@ -1,7 +1,12 @@
 package com.example.newapplication.views;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +22,14 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.newapplication.R;
+import com.example.newapplication.adapter.ExportTreatmentListAdapter;
+import com.example.newapplication.model.VersionCheckRequest;
+import com.example.newapplication.model.VersionData;
+import com.example.newapplication.utils.Utils;
+import com.example.newapplication.viewmodel.SplashViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SecondTaskActivity extends AppCompatActivity {
     private ToggleButton onoff;
@@ -26,6 +39,8 @@ public class SecondTaskActivity extends AppCompatActivity {
     private RadioButton r1, r2;
     private Spinner disctrict;
     private Button submit;
+    private RecyclerView recyclerView;
+    List<VersionData> versionDatalist=new ArrayList<>();
     String colorsList[] = {"Red", "Blue", "White", "Yellow", "Black", "Green", "Purple", "Orange", "Grey"};
 
 
@@ -44,6 +59,40 @@ public class SecondTaskActivity extends AppCompatActivity {
         onoff = findViewById(R.id.tb_onoff);
         disctrict = findViewById(R.id.istrict);
         actDist = findViewById(R.id.act_dist);
+        recyclerView = findViewById(R.id.recyclerView1);
+        SplashViewModel splashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
+        if(Utils.checkInternetConnection(SecondTaskActivity.this)){
+            VersionCheckRequest versionCheckRequest=new VersionCheckRequest();
+            versionCheckRequest.setAppName("MJPHRMS");
+            versionCheckRequest.setMobileType("Android");
+            versionCheckRequest.setWebServiceName("versionCheck");
+            splashViewModel.callVersioncheckApi(versionCheckRequest);
+        }else{
+            Toast.makeText(this, "Please check your Internet connection", Toast.LENGTH_SHORT).show();
+        }
+        splashViewModel.getVersionResponse().observe(this,versionCheckResponse -> {
+                    if (versionCheckResponse != null) {
+                        if (versionCheckResponse.getStatusCode() == 200) {
+                            VersionData v1 = new VersionData();
+                            v1.setAppName(versionCheckResponse.getData().getAppName());
+                            v1.setWebServiceName(versionCheckResponse.getData().getWebServiceName());
+                           v1.setLastUpdatedDate(versionCheckResponse.getData().getLastUpdatedDate());
+/////
+                            versionDatalist.add(v1);
+                            ExportTreatmentListAdapter issueDetailsAdapter = new ExportTreatmentListAdapter(this, versionDatalist );
+                            recyclerView.setAdapter(issueDetailsAdapter);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(SecondTaskActivity.this));
+                            recyclerView.addItemDecoration(new DividerItemDecoration(SecondTaskActivity.this, 0));
+                            recyclerView.setHasFixedSize(true);
+                            issueDetailsAdapter.setData(versionDatalist);
+
+
+
+                        }
+                    }
+                }
+
+        );
         // dropdown
         ArrayAdapter<String> districtAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, colorsList);
         districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view

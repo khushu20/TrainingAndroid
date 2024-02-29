@@ -83,6 +83,10 @@ android:background="@color/backgound"
         android:layout_width="match_parent"
         android:id="@+id/act_dist"
         android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/recyclerView1"
+            android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/btn_submit"
@@ -92,6 +96,8 @@ android:background="@color/backgound"
         android:layout_margin="@dimen/dimen_10dp"
         android:text="Submit"
         />
+
     </LinearLayout>
+
 
 </LinearLayout>
