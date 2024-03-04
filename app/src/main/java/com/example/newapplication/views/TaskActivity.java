@@ -38,7 +38,7 @@ public class TaskActivity extends AppCompatActivity {
         thirdTask.setOnClickListener(v->{
             //Toast.makeText(this, "Navigate to Second Screen", Toast.LENGTH_SHORT).show();
             // navigation from Task screen to constrain screen
-            Intent intent = new Intent(TaskActivity.this, CameraActivity.class);
+            Intent intent = new Intent(TaskActivity.this, Dashboard.class);
             startActivity(intent);
             finish();
         });

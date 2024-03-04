@@ -12,7 +12,7 @@ public class ApiClient {
 
 
         private static Retrofit retrofit = null;
-        private static String BaseUrl = "http://demo11.cgg.gov.in/cmnwebservicesmobile/attwsapi/";
+        private static String BaseUrl = "http://qa11.cgg.gov.in/cmnwebservicesmobile/attwsapi/";
         public static Retrofit getClient() {
 
             OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder()

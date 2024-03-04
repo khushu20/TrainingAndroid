@@ -1,9 +1,20 @@
 package com.example.newapplication.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+
+@Entity(tableName = "VersionTable")
 public class VersionData {
+    @SerializedName("maxTimeChk")
+    @Expose
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "ID")
+    private int maxTimeChk;
 
     @SerializedName("appName")
     @Expose
@@ -21,9 +32,7 @@ public class VersionData {
     @Expose
     private String lastUpdatedDate;
 
-    @SerializedName("maxTimeChk")
-    @Expose
-    private int maxTimeChk;
+
 
     public String getAppName() {
         return appName;
