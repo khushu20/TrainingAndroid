@@ -10,11 +10,10 @@ import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = "VersionTable")
 public class VersionData {
-    @SerializedName("maxTimeChk")
-    @Expose
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ID")
-    private int maxTimeChk;
+    private int id;
 
     @SerializedName("appName")
     @Expose
@@ -66,11 +65,11 @@ public class VersionData {
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
-    public int getMaxTimeChk() {
-        return maxTimeChk;
+    public int getId() {
+        return id;
     }
 
-    public void setMaxTimeChk(int maxTimeChk) {
-        this.maxTimeChk = maxTimeChk;
+    public void setId(int id) {
+        this.id = id;
     }
 }

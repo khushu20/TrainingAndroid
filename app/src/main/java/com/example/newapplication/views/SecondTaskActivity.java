@@ -1,6 +1,7 @@
 package com.example.newapplication.views;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -73,18 +74,14 @@ public class SecondTaskActivity extends AppCompatActivity {
         splashViewModel.getVersionResponse().observe(this,versionCheckResponse -> {
                     if (versionCheckResponse != null) {
                         if (versionCheckResponse.getStatusCode() == 200) {
-                            VersionData v1 = new VersionData();
-                            v1.setAppName(versionCheckResponse.getData().getAppName());
-                            v1.setWebServiceName(versionCheckResponse.getData().getWebServiceName());
-                           v1.setLastUpdatedDate(versionCheckResponse.getData().getLastUpdatedDate());
+//                            VersionData v1 = new VersionData();
+//                            v1.setAppName(versionCheckResponse.getData().getAppName());
+//                            v1.setWebServiceName(versionCheckResponse.getData().getWebServiceName());
+//                           v1.setLastUpdatedDate(versionCheckResponse.getData().getLastUpdatedDate());
+                           splashViewModel.insertVersionDatabase(versionCheckResponse.getData());
+
 /////
-                            versionDatalist.add(v1);
-                            ExportTreatmentListAdapter issueDetailsAdapter = new ExportTreatmentListAdapter(this, versionDatalist );
-                            recyclerView.setAdapter(issueDetailsAdapter);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(SecondTaskActivity.this));
-                            recyclerView.addItemDecoration(new DividerItemDecoration(SecondTaskActivity.this, 0));
-                            recyclerView.setHasFixedSize(true);
-                            issueDetailsAdapter.setData(versionDatalist);
+
 
 
 
@@ -93,6 +90,24 @@ public class SecondTaskActivity extends AppCompatActivity {
                 }
 
         );
+        splashViewModel.getVersionDBData().observe(this, new Observer<List<VersionData>>() {
+            @Override
+            public void onChanged(List<VersionData> versionlist) {
+                if ( versionlist.size()>0){
+
+
+                        ExportTreatmentListAdapter issueDetailsAdapter = new ExportTreatmentListAdapter(SecondTaskActivity.this, versionlist );
+                        recyclerView.setAdapter(issueDetailsAdapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(SecondTaskActivity.this));
+                        recyclerView.addItemDecoration(new DividerItemDecoration(SecondTaskActivity.this, 0));
+                        recyclerView.setHasFixedSize(true);
+                        issueDetailsAdapter.setData(versionlist);
+
+
+                }
+
+            }
+        });
         // dropdown
         ArrayAdapter<String> districtAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, colorsList);
         districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view

@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.example.newapplication.model.VersionData;
 
 
-@Database(entities = {VersionData.class}, version = 2, exportSchema = false)
+@Database(entities = {VersionData.class}, version = 1, exportSchema = false)
 public abstract class NewDatabase extends  RoomDatabase {
 
     private static NewDatabase INSTANCE;

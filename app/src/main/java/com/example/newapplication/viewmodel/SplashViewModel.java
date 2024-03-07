@@ -12,24 +12,32 @@ import com.example.newapplication.model.IssueDetailsMainRequest;
 import com.example.newapplication.model.IssueShowDetailsResponse;
 import com.example.newapplication.model.VersionCheckRequest;
 import com.example.newapplication.model.VersionCheckResponse;
+import com.example.newapplication.model.VersionData;
+import com.example.newapplication.repository.SplashRepository;
 import com.example.newapplication.rerofit.ApiClient;
 import com.example.newapplication.rerofit.ApiInterface;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SplashViewModel extends AndroidViewModel {
+    private SplashRepository splashRepository;
     private final MutableLiveData<VersionCheckResponse> checkResponseMutableLiveData=new MutableLiveData<>();
     private final MutableLiveData<IssueShowDetailsResponse> issuedetailsMutableLiveData=new MutableLiveData<>();;
 
     public SplashViewModel(@NonNull Application application) {
         super(application);
        // checkResponseMutableLiveData=new MutableLiveData<>();
+        splashRepository=new SplashRepository(application);
+
     }
     public LiveData<VersionCheckResponse> getVersionResponse(){
         return checkResponseMutableLiveData;
     }
+
     public LiveData<IssueShowDetailsResponse> getIssueDetailsResponse(){
         return issuedetailsMutableLiveData;
     }
@@ -42,6 +50,7 @@ public class SplashViewModel extends AndroidViewModel {
                 try {
                     if (response.isSuccessful() && response.body() != null) {
                         checkResponseMutableLiveData.setValue(response.body());
+
 
                     }
                 } catch (Exception e) {
@@ -65,6 +74,12 @@ public class SplashViewModel extends AndroidViewModel {
             }
 
         });
+    }
+    public void insertVersionDatabase(VersionData versionData){
+        splashRepository.insertVersionData(versionData);
+    }
+    public LiveData<List<VersionData>> getVersionDBData() {
+        return splashRepository.getVersionData();
     }
     public void callIssueDetasilsApi(String Auth,IssueDetailsMainRequest issueDetailsMainRequest){
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
